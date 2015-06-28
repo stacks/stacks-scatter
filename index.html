@@ -75,6 +75,8 @@ div#position p {
 </div>
 
 <script>
+// hide by default
+$("div#position").hide();
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 30000 - margin.left - margin.right,
@@ -100,10 +102,15 @@ $.getJSON("chapters.php", function(json) {
 });
 
 function updatePosition(d) {
-  console.log(chapters[d.chapter - 1].title);
+  $("div#position").show();
+
   $("dt#tag + dd").text(d.tag);
   $("dt#page + dd").text(d.page);
   $("p#chapter").text("in Chapter " + d.chapter + ": " + chapters[d.chapter - 1].title);
+}
+
+function clearPosition() {
+  $("div#position").hide();
 }
 
 d3.json("scatter.php", function(data) {
@@ -151,15 +158,18 @@ d3.json("scatter.php", function(data) {
       .attr("r", function(d) { return d.chapter ? 3 : 0; })
       .attr("transform", function(d) { return "translate(" + x(tags.indexOf(d.tag)) + "," + y1(d.chapter) + ")"; })
       .on("mouseenter", updatePosition)
-      
+      .on("mouseleave", clearPosition)
 
   svg.selectAll(".point")
       .data(data)
-    .enter().append("circle")
+    .enter().append("svg:a")
+      .attr("xlink:href", function(d) { return "http://stacks.math.columbia.edu/tag/" + d.tag; })
+    .append("circle")
       .attr("class", "page")
       .attr("r", function(d) { return d.chapter ? 3 : 0; })
       .attr("transform", function(d) { return "translate(" + x(tags.indexOf(d.tag)) + "," + y2(d.page) + ")"; })
       .on("mouseenter", updatePosition)
+      .on("mouseleave", clearPosition)
 });
 
 </script>
