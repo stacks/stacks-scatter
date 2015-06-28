@@ -57,10 +57,32 @@ div#position p {
   margin-bottom: 0;
 }
 
+p#message {
+  position: fixed;
+  top: 600px;
+  left: 30px;
+}
+
+p#loading {
+  position: fixed;
+  top: 650px;
+  left: 30px;
+}
+
+.spin {
+  position: fixed;
+  top: 250px;
+  left: 50%;
+}
+
 </style>
-<body>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="jquery.spin.js"></script>
+<link rel="stylesheet" href="jquery.spin.css">
+<body>
 <script src="http://d3js.org/d3.v2.js?2.9.6"></script>
+
+<div class="spin" data-spin></div>
 
 <div id="position">
   <dl>
@@ -73,6 +95,12 @@ div#position p {
   <br style="clear: both">
   <p id="chapter">
 </div>
+
+<p id="loading">Please stand by while the graph is rendering. This might take a while.</p>
+
+<p id="message">
+The horizontal axis corresponds to tags (roughly time), the blue dots show page number currently occupied by the tag, and the red dots show chapter currently occupied by tag. Hover your mouse over a dot for info, and you can click on a dot to go to the tag page.
+</p>
 
 <script>
 // hide by default
@@ -170,6 +198,9 @@ d3.json("scatter.php", function(data) {
       .attr("transform", function(d) { return "translate(" + x(tags.indexOf(d.tag)) + "," + y2(d.page) + ")"; })
       .on("mouseenter", updatePosition)
       .on("mouseleave", clearPosition)
+
+  $(".spin").hide();
+  $("#loading").hide();
 });
 
 </script>
