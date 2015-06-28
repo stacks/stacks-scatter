@@ -28,7 +28,7 @@ foreach ($chapters as $id => $chapter) {
     unset($chapters[$id][$i]);
   unset($chapters[$id]["filename"]);
 }
-print json_encode($chapters, JSON_PRETTY_PRINT);
+print json_encode($chapters);
 
 ?>
 

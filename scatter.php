@@ -27,8 +27,10 @@ $scatter = getScatterData();
 foreach ($scatter as $id => $tag) {
   if ($tag["type"] == "item")
     $scatter[$id]["chapter"] = 0;
-  else
-    $scatter[$id]["chapter"] = explode(".", $tag["book_id"])[0];
+  else {
+    $scatter[$id]["chapter"] = explode(".", $tag["book_id"]);
+    $scatter[$id]["chapter"] = $scatter[$id]["chapter"][0];
+  }
 
   // less data footprint
   unset($scatter[$id]["0"]);
@@ -38,7 +40,7 @@ foreach ($scatter as $id => $tag) {
   unset($scatter[$id]["book_id"]);
   unset($scatter[$id]["type"]);
 }
-print json_encode($scatter, JSON_PRETTY_PRINT);
+print json_encode($scatter);
 
 ?>
 
