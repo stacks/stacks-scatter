@@ -4,11 +4,11 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // read configuration file
-$config = parse_ini_file("config.ini");
+$config = parse_ini_file("../stacks-website/config.ini");
 
 // initialize the global database object
 try {
-  $database = new PDO("sqlite:" . $config["database"]);
+  $database = new PDO("sqlite:../stacks-website/" . $config["database"]);
 }
 catch(PDOException $e) {
   echo $e->getMessage();
